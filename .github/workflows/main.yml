@@ -1,0 +1,23 @@
+name: Run Testsigma Test Plan
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  run-testsigma:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Testsigma Test Plan
+        shell: pwsh
+        env:
+          TESTSIGMA_API_KEY: ${{ secrets.TESTSIGMA_API_KEY }}
+          TESTSIGMA_TEST_PLAN_ID: "169"          # your plan ID
+          REPORT_FILE_PATH: "./junit-report.xml"
+          MAX_WAIT_TIME_FOR_SCRIPT_TO_EXIT: "180"
+        run: ./testsigma_cicd.ps1
